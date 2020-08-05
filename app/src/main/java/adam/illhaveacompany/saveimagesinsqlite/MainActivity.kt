@@ -4,10 +4,11 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -16,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
+
+
 class MainActivity : AppCompatActivity() {
 
     private val STORAGE_PERMISSION_CODE = 1
@@ -29,9 +32,8 @@ class MainActivity : AppCompatActivity() {
 
 
         if(areThereImagesInDatabase()) {
-            val imageInBitmapForm = BitmapFactory.decodeByteArray(getLastPicture(), 0, getLastPicture().size)
-            val rotatedImage = rotateBitmap(imageInBitmapForm, 90)
-            iv_image.setImageBitmap(rotatedImage)
+            val imageInDrawableForm: Drawable = BitmapDrawable(resources, BitmapFactory.decodeByteArray(getLastPicture(), 0, getLastPicture().size))
+            iv_image.setImageDrawable(imageInDrawableForm)
         }//20
 
 
