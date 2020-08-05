@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/ll_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <!--lowest layer (image view then drawing view) starts from the top -->
+        <ImageView
+            android:id="@+id/iv_image"
+            android:scaleType="centerCrop"
+            android:src="@color/colorAccent"
+            android:contentDescription="background image"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp" />
+
+    <Button
+        android:id="@+id/change_background_button"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Change Image Background"
+        android:textSize="20sp"
+        android:background="@color/colorPrimary"
+
+        />
+
+    <!--//3-->
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
