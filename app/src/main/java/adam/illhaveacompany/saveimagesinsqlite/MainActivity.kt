@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     private fun addImageToDatabase(image: ByteArray) {
         val databaseHandler: DatabaseHandler = DatabaseHandler(this)
 
-        val status = databaseHandler.addPicture(Picture(0, image))
+        val status = databaseHandler.addPicture(image)
 
         if(status > -1) {
             Toast.makeText(applicationContext, "image saved successfully", Toast.LENGTH_SHORT).show()
