@@ -39,11 +39,11 @@ class DatabaseHandler (context: Context):
 
         val contentValues = ContentValues()
 
-        contentValues.put(KEY_ID, picture.image)
+        contentValues.put(KEY_PICTURE, picture.image)
 
         val success = db.insert(TABLE_PICTURE, null, contentValues)
         db.close()
         return success
-    }
+    }//14
 
 }

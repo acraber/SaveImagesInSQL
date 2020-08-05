@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }//13
+    }//16
     private fun addImageToDatabase(image: ByteArray) {
         val databaseHandler: DatabaseHandler = DatabaseHandler(this)
 
@@ -101,5 +101,5 @@ class MainActivity : AppCompatActivity() {
         if(status > -1) {
             Toast.makeText(applicationContext, "image saved successfully", Toast.LENGTH_SHORT).show()
         }
-    }
+    }//15
 }
