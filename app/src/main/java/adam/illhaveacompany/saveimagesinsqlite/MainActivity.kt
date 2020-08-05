@@ -4,8 +4,9 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
+import android.graphics.Matrix
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -25,6 +26,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val imageInBitmapForm = BitmapFactory.decodeByteArray(getLastPicture(), 0, getLastPicture().size)
+        val rotatedImage = rotateBitmap(imageInBitmapForm, 90)
+        iv_image.setImageBitmap(rotatedImage)
+        //20
 
 
         //iv_image.background = the result of the bitmap translated back to an image
@@ -75,6 +81,7 @@ class MainActivity : AppCompatActivity() {
                         iv_image.visibility = View.VISIBLE
 
                         val imageUri = data.data
+                        iv_image.setImageURI(data.data)
 
 
                         if (imageUri != null) {
@@ -112,5 +119,19 @@ class MainActivity : AppCompatActivity() {
         val lastPictureByteArray = lastPicture.image
 
         return lastPictureByteArray
-    }
+    }//18
+
+    fun rotateBitmap(source: Bitmap, angle: Int): Bitmap? {
+        val matrix = Matrix()
+        matrix.postRotate(angle.toFloat())
+        return Bitmap.createBitmap(
+            source,
+            0,
+            0,
+            source.width,
+            source.height,
+            matrix,
+            true
+        )
+    }//19
 }
