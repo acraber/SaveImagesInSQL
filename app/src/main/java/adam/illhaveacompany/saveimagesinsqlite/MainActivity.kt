@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
@@ -15,8 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
-
-
 class MainActivity : AppCompatActivity() {
 
     private val STORAGE_PERMISSION_CODE = 1
@@ -27,10 +26,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val imageInBitmapForm = BitmapFactory.decodeByteArray(getLastPicture(), 0, getLastPicture().size)
-        val rotatedImage = rotateBitmap(imageInBitmapForm, 90)
-        iv_image.setImageBitmap(rotatedImage)
-        //20
+
+
+        if(areThereImagesInDatabase()) {
+            val imageInBitmapForm = BitmapFactory.decodeByteArray(getLastPicture(), 0, getLastPicture().size)
+            val rotatedImage = rotateBitmap(imageInBitmapForm, 90)
+            iv_image.setImageBitmap(rotatedImage)
+        }//20
 
 
         //iv_image.background = the result of the bitmap translated back to an image
@@ -134,4 +136,10 @@ class MainActivity : AppCompatActivity() {
             true
         )
     }//19
+
+    fun areThereImagesInDatabase() : Boolean {
+        val databaseHandler: DatabaseHandler = DatabaseHandler(this)
+        return databaseHandler.areTherePictures()
+    }//22
+
 }
