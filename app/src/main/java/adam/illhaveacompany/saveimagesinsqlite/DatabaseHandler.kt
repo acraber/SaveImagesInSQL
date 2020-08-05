@@ -2,11 +2,16 @@ package adam.illhaveacompany.saveimagesinsqlite
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.Bitmap
+import android.graphics.Insets.add
 import android.graphics.drawable.BitmapDrawable
 import android.media.Image
+import androidx.core.database.getBlobOrNull
+import androidx.core.view.OneShotPreDrawListener.add
 
 class DatabaseHandler (context: Context):
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION){
@@ -45,5 +50,38 @@ class DatabaseHandler (context: Context):
         db.close()
         return success
     }//14
+
+    fun getPictureList() : ArrayList<Picture> {
+        val pictureList: ArrayList<Picture> = ArrayList<Picture>()
+        val selectQuery = "SELECT * FROM $TABLE_PICTURE"
+
+        val db = this.readableDatabase
+        var cursor: Cursor? = null
+
+        try {
+            cursor = db.rawQuery(selectQuery, null)
+        }catch (e: SQLiteException){
+            db.execSQL(selectQuery)
+        }//5
+
+        var id : Int
+        var picture: ByteArray
+
+        if (cursor != null) {
+            if(cursor.moveToFirst()) {
+                do{
+                    id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
+                    //*POSSIBLE PROBLEM*
+                    picture = cursor.getBlob(cursor.getColumnIndex(KEY_PICTURE))
+
+                    val pic = Picture(id, picture)
+
+                    pictureList.add(pic)
+                } while(cursor.moveToNext())
+            }
+        }
+        return pictureList
+    }
+
 
 }

@@ -12,6 +12,11 @@
         >
 
         <!--lowest layer (image view then drawing view) starts from the top -->
+    <TextView
+        android:id="@+id/test_byteArray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
         <ImageView
             android:id="@+id/iv_image"
             android:scaleType="centerCrop"

@@ -1,12 +1,11 @@
 package adam.illhaveacompany.saveimagesinsqlite
 
 import android.Manifest
-import android.R.attr
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -15,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
-import java.net.URI
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        //iv_image.background = the result of the bitmap translated back to an image
 
         change_background_button.setOnClickListener { view ->
             if (isPermissionAllowed(Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -42,7 +43,8 @@ class MainActivity : AppCompatActivity() {
                     STORAGE_PERMISSION_CODE
                 )
             }
-        }//7
+        }
+
     }
 
 
@@ -96,10 +98,19 @@ class MainActivity : AppCompatActivity() {
     private fun addImageToDatabase(image: ByteArray) {
         val databaseHandler: DatabaseHandler = DatabaseHandler(this)
 
-        val status = databaseHandler.addPicture(image)
+        val status = databaseHandler.addPicture(Picture(0, image))
 
         if(status > -1) {
             Toast.makeText(applicationContext, "image saved successfully", Toast.LENGTH_SHORT).show()
         }
     }//15
+
+    fun getLastPicture(): ByteArray  {
+        val databaseHandler : DatabaseHandler = DatabaseHandler(this)
+        val pictureList = databaseHandler.getPictureList()
+        val lastPicture = pictureList[pictureList.size - 1]
+        val lastPictureByteArray = lastPicture.image
+
+        return lastPictureByteArray
+    }
 }
